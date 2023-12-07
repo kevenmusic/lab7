@@ -8,15 +8,15 @@
         /// <summary>
         /// Получает или задает имя физического владельца.
         /// </summary>
-        public string Name { get; set; }
+        public string IndividualName { get; set; }
 
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="IndividualOwner"/>.
         /// </summary>
         /// <param name="name">Имя физического владельца.</param>
-        public IndividualOwner(string name)
+        public IndividualOwner(string individualName)
         {
-            Name = name;
+            IndividualName = individualName;
         }
     }
 }

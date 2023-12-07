@@ -8,8 +8,13 @@ namespace WpfApp
 {
     public partial class MainWindow : Window
     {
-        private readonly Car[] cars;
-        private readonly string[] bodyTypes = { "Sedan", "SUV", "Hatchback", "Coupe" };
+        Car[] cars;
+        string[] bodyTypes = {
+            "Sedan", 
+            "SUV", 
+            "Hatchback", 
+            "Coupe" 
+        };
 
         public MainWindow()
         {
@@ -48,43 +53,58 @@ namespace WpfApp
                 return;
 
             // Выполняем действия на основе выбранного варианта
-            switch (selectedOption.Content.ToString())
+            try
             {
-                case "Физические лица, нуждающиеся в техосмотре":
-                    ShowIndividualsRequiringInspection();
-                    break;
+                switch (selectedOption.Content.ToString())
+                {
+                    case "Физические лица, нуждающиеся в техосмотре":
+                        ShowIndividualsRequiringInspection();
+                        break;
 
-                case "Юридические лица, нуждающиеся в техосмотре":
-                    ShowLegalEntitiesRequiringInspection();
-                    break;
+                    case "Юридические лица, нуждающиеся в техосмотре":
+                        ShowLegalEntitiesRequiringInspection();
+                        break;
 
-                case "Количество юридических автомобилей по типу кузова":
-                    ShowLegalCarsCountByBodyType();
-                    break;
-                case "Все автомобили":
-                    ShowAllCars();
-                    break;
+                    case "Количество юридических автомобилей по типу кузова":
+                        ShowLegalCarsCountByBodyType();
+                        break;
+                    case "Все автомобили":
+                        ShowAllCars();
+                        break;
+                }
+            }
+            catch (CarException ex)
+            {
+                // Обработка исключений
+                MessageBox.Show($"Произошла ошибка: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private void ShowIndividualsRequiringInspection()
         {
-            DateTime currentDate = DateTime.Now;
-            outputTextBox.Text += "Физические лица, которым необходимо проходить техосмотр:\n";
-
-            foreach (var car in cars)
+            try
             {
-                if (car.OwnerType == OwnerType.Individual)
-                {
-                    IndividualCar individualCar = (IndividualCar)car;
-                    string inspectionFrequency = individualCar.GetInspectionFrequency();
+                DateTime currentDate = DateTime.Now;
+                outputTextBox.Text += "Физические лица, которым необходимо проходить техосмотр:\n";
 
-                    outputTextBox.Text += $"Марка: {car.Brand}, Владелец: {individualCar.Owner.Name}, " +
-                                          $"Дата производства: {car.ProductionDate.ToShortDateString()}, " +
-                                          $"Пробег: {car.Mileage} км, " +
-                                          $"Тип кузова: {car.BodyType}. \n" +
-                                          $"Требуется осмотр: {inspectionFrequency}.\n";
+                foreach (var car in cars)
+                {
+                    if (car.OwnerType == OwnerType.Individual)
+                    {
+                        IndividualCar individualCar = (IndividualCar)car;
+                        string inspectionFrequency = individualCar.GetInspectionFrequency();
+
+                        outputTextBox.Text += $"Марка: {car.Brand}, Владелец: {individualCar.Owner.Name}, " +
+                                              $"Дата производства: {car.ProductionDate.ToShortDateString()}, " +
+                                              $"Пробег: {car.Mileage} км, " +
+                                              $"Тип кузова: {car.BodyType}. \n" +
+                                              $"Требуется осмотр: {inspectionFrequency}.\n";
+                    }
                 }
+            }
+            catch (CarException ex)
+            {
+                MessageBox.Show($"Ошибка при обработке физических лиц: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -140,14 +160,21 @@ namespace WpfApp
 
         private void ShowAllCars()
         {
-            outputTextBox.Text += "Все автомобили:\n";
-
-            foreach (var car in cars)
+            try
             {
-                outputTextBox.Text += $"Марка: {car.Brand}, Тип кузова: {car.BodyType}, Пробег: {car.Mileage}, " +
-                    $"Дата производства: {car.ProductionDate.ToShortDateString()}, " +
-                                     $"Дата последнего техосмотра: {car.LastTechnicalInspectionDate.ToShortDateString()}, " +
-                                     $"Владелец: {GetOwnerInfo(car)}\n";
+                outputTextBox.Text += "Все автомобили:\n";
+
+                foreach (var car in cars)
+                {
+                    outputTextBox.Text += $"Марка: {car.Brand}, Тип кузова: {car.BodyType}, Пробег: {car.Mileage}, " +
+                        $"Дата производства: {car.ProductionDate.ToShortDateString()}, " +
+                                         $"Дата последнего техосмотра: {car.LastTechnicalInspectionDate.ToShortDateString()}, " +
+                                         $"Владелец: {GetOwnerInfo(car)}\n";
+                }
+            }
+            catch (CarException ex)
+            {
+                MessageBox.Show($"Ошибка при отображении всех автомобилей: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

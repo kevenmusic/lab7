@@ -1,10 +1,10 @@
 ﻿using System;
 
 namespace ClassLibrary7
-{   
+{
     /// <summary>
-     /// Представляет тип владельца автомобиля (Физическое или Юридическое лицо).
-     /// </summary>
+    /// Представляет тип владельца автомобиля (Физическое или Юридическое лицо).
+    /// </summary>
     public enum OwnerType
     {
         /// <summary>
@@ -44,7 +44,7 @@ namespace ClassLibrary7
         public string BodyType { get; set; }
 
         /// <summary>
-        /// Получает или задает тип владельца автомобиля (Физическое или Юридическое лицо).
+        /// Получает или задает тип владельца автомобиля (Физическое или ЮридиЦческое лицо).
         /// </summary>
         public OwnerType OwnerType { get; set; }
 
@@ -64,6 +64,21 @@ namespace ClassLibrary7
         /// <param name="lastTechnicalInspectionDate">Дата последнего технического осмотра автомобиля.</param>
         public Car(DateTime productionDate, double mileage, string brand, string bodyType, OwnerType ownerType, DateTime lastTechnicalInspectionDate)
         {
+            if (mileage < 0)
+            {
+                throw new CarException("Пробег не может быть отрицательным.");
+            }
+
+            if (string.IsNullOrWhiteSpace(brand))
+            {
+                throw new CarException("Марка автомобиля не может быть пустой или содержать только пробелы.");
+            }
+
+            if (productionDate > lastTechnicalInspectionDate)
+            {
+                throw new CarException("Дата производства не может быть больше чем дата последнего тех.осмотра.");
+            }
+
             ProductionDate = productionDate;
             Mileage = mileage;
             Brand = brand;
