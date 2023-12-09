@@ -1,6 +1,7 @@
 ﻿using ClassLibrary7;
 using System;
 using System.Text.RegularExpressions;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ConsoleApp7
 {
@@ -78,7 +79,15 @@ namespace ConsoleApp7
                                 }
                                 catch (CarException ex)
                                 {
-                                    Console.WriteLine($"Ошибка при обработке автомобиля {ex.Message}");
+                                    Console.WriteLine($"{ex.Message}");
+                                }
+                                catch (IndividualCarException ex)
+                                {
+                                    Console.WriteLine($"{ex.Message}");
+                                }
+                                catch (LegalCarException ex)
+                                {
+                                    Console.WriteLine($"{ex.Message}");
                                 }
                             }
                         }
@@ -91,36 +100,15 @@ namespace ConsoleApp7
                     case "2":
                         Console.Clear();
                         PrintAllCars(cars);
-                        text = "Юридические лица, которым необходимо проходить техосмотр";
-                        leftPadding = 50;
-                        rightPadding = 46;
-
-                        indentedText = text.PadLeft(text.Length + leftPadding).PadRight(text.Length + leftPadding + rightPadding);
-
-                        Console.WriteLine($"| {indentedText} |");
-                        Console.WriteLine("|" + new string('-', 154) + "|");
-
-                        foreach (var car in cars)
-                        {
-                            if (car is LegalCar legalCar)
-                            {
-                                string inspectionFrequency = legalCar.GetInspectionFrequency();
-
-                                Console.WriteLine($"| Марка: {car.Brand,-10} | Владелец: {legalCar.Owner.LegalName,-15} " +
-                                                  $"| Дата производства: {car.ProductionDate.ToShortDateString(),-10} " +
-                                                  $"| Пробег: {car.Mileage,-5} км " +
-                                                  $"| Тип кузова: {car.BodyType,-7} " +
-                                                  $"| Требуется осмотр: {inspectionFrequency,-10} |");
-                            }
-                        }
-
-                        Console.WriteLine("|" + new string('-', 154) + "|");
+                        PrintAllCars(cars, showLegalCarsOnly: true);
                         Console.Write("Нажмите Enter для возврата в меню...");
                         Console.ReadLine();
                         break;
 
                     case "3":
                         Console.Clear();
+
+                        PrintAllCars(cars, showLegalCarsOnly: true);
 
                         string[] bodyTypes =
                         {
@@ -166,6 +154,7 @@ namespace ConsoleApp7
                     case "4":
                         Console.Clear();
                         PrintAllCars(cars);
+                        
                         Console.Write("Нажмите Enter для возврата в меню...");
                         Console.ReadLine();
                         break;
@@ -249,6 +238,14 @@ namespace ConsoleApp7
                             {
                                 Console.WriteLine($"Произошла ошибка: {ex.Message}");
                             }
+                            catch (IndividualCarException ex)
+                            {
+                                Console.WriteLine($"Произошла ошибка: {ex.Message}");
+                            }
+                            catch (LegalCarException ex)
+                            {
+                                Console.WriteLine($"Произошла ошибка: {ex.Message}");
+                            }
                             catch (FormatException ex)
                             {
                                 Console.WriteLine($"{ex.Message}");
@@ -310,6 +307,32 @@ namespace ConsoleApp7
             {
                 Console.WriteLine($"{ex.Message}");
             }
+        }
+
+        static void PrintAllCars(Car[] cars, bool showLegalCarsOnly = false)
+        {
+            string text = "Юридические лица, которым необходимо проходить техосмотр";
+            int leftPadding = 50;
+            int rightPadding = 46;
+            string indentedText = text.PadLeft(text.Length + leftPadding).PadRight(text.Length + leftPadding + rightPadding);
+            Console.WriteLine($"| {indentedText} |");
+            Console.WriteLine("|" + new string('-', 154) + "|");
+
+            foreach (var car in cars)
+            {
+                if (car is LegalCar legalCar)
+                {
+                    string inspectionFrequency = legalCar.GetInspectionFrequency();
+
+                    Console.WriteLine($"| Марка: {car.Brand,-10} | Владелец: {legalCar.Owner.LegalName,-15} " +
+                                      $"| Дата производства: {car.ProductionDate.ToShortDateString(),-10} " +
+                                      $"| Пробег: {car.Mileage,-5} км " +
+                                      $"| Тип кузова: {car.BodyType,-7} " +
+                                      $"| Требуется осмотр: {inspectionFrequency,-10} |");
+                }
+            }
+
+            Console.WriteLine("|" + new string('-', 154) + "|");
         }
     }
 }

@@ -24,6 +24,11 @@ namespace ClassLibrary7
         public LegalCar(DateTime productionDate, double mileage, string brand, string bodyType, DateTime lastTechnicalInspectionDate, LegalOwner owner)
             : base(productionDate, mileage, brand, bodyType, OwnerType.Legal, lastTechnicalInspectionDate)
         {
+            if (owner == null)
+            {
+                throw new LegalCarException("Владелец автомобиля не может быть null.");
+            }
+
             Owner = owner;
         }
 

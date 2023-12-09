@@ -24,6 +24,11 @@ namespace ClassLibrary7
         public IndividualCar(DateTime productionDate, double mileage, string brand, string bodyType, DateTime lastTechnicalInspectionDate, IndividualOwner owner)
             : base(productionDate, mileage, brand, bodyType, OwnerType.Individual, lastTechnicalInspectionDate)
         {
+            if (owner == null)
+            {
+                throw new IndividualCarException("Владелец автомобиля не может быть null.");
+            }
+
             Owner = owner;
         }
 
