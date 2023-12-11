@@ -1,7 +1,6 @@
 ﻿using ClassLibrary7;
 using System;
 using System.Text.RegularExpressions;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace ConsoleApp7
 {

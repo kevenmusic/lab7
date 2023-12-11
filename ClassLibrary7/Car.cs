@@ -21,7 +21,7 @@ namespace ClassLibrary7
     /// <summary>
     /// Представляет базовый класс для автомобиля.
     /// </summary>
-    public class Car
+    public abstract class Car
     {
         /// <summary>
         /// Получает или задает дату производства автомобиля.
@@ -44,7 +44,7 @@ namespace ClassLibrary7
         public string BodyType { get; set; }
 
         /// <summary>
-        /// Получает или задает тип владельца автомобиля (Физическое или ЮридиЦческое лицо).
+        /// Получает или задает тип владельца автомобиля (Физическое или Юридическое лицо).
         /// </summary>
         public OwnerType OwnerType { get; set; }
 
@@ -62,7 +62,7 @@ namespace ClassLibrary7
         /// <param name="bodyType">Тип кузова автомобиля.</param>
         /// <param name="ownerType">Тип владельца автомобиля (Физическое или Юридическое лицо).</param>
         /// <param name="lastTechnicalInspectionDate">Дата последнего технического осмотра автомобиля.</param>
-        public Car(DateTime productionDate, double mileage, string brand, string bodyType, OwnerType ownerType, DateTime lastTechnicalInspectionDate)
+        protected Car(DateTime productionDate, double mileage, string brand, string bodyType, OwnerType ownerType, DateTime lastTechnicalInspectionDate)
         {
             if (mileage < 0)
             {
@@ -87,9 +87,6 @@ namespace ClassLibrary7
             LastTechnicalInspectionDate = lastTechnicalInspectionDate;
         }
 
-        public virtual string GetInspectionFrequency()
-        {
-            return "";
-        }
+        public abstract string GetInspectionFrequency();
     }
 }

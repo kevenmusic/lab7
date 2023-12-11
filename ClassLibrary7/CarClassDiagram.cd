@@ -28,13 +28,6 @@
       <FileName>LegalCar.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ClassLibrary7.LegalOwner">
-    <Position X="3.75" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>LegalOwner.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="ClassLibrary7.CarException" Collapsed="true">
     <Position X="5.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
@@ -54,6 +47,13 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>CarException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClassLibrary7.LegalOwner">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LegalOwner.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Enum Name="ClassLibrary7.OwnerType">
